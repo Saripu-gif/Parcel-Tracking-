@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="QuickTrack - Responsive courier tracking mini project">
+<title>QuickTrack | Courier Tracking</title>
+<style>
+:root{--primary:#0d47a1;--blue:#1976d2;--accent:#ffca28;--green:#2e7d32;--bg:#f4f7fb;--text:#172033;--muted:#667085;--card:#fff;--border:#e5e7eb;--shadow:0 12px 35px rgba(15,23,42,.08)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}a{text-decoration:none;color:inherit}button,input{font:inherit}button{cursor:pointer;border:0}.container{width:min(1100px,92%);margin:auto}
+header{position:sticky;top:0;z-index:50;background:rgba(13,71,161,.97);color:#fff;box-shadow:0 4px 15px #0002}.nav{height:72px;display:flex;align-items:center;justify-content:space-between}.logo{font-size:25px;font-weight:800;letter-spacing:.3px}.logo span{color:var(--accent)}nav{display:flex;gap:28px}nav a{font-weight:600;opacity:.95}nav a:hover{color:var(--accent)}.menu{display:none;background:transparent;color:#fff;font-size:26px}
+.hero{background:linear-gradient(135deg,#082e70,#1976d2 65%,#42a5f5);color:#fff;padding:86px 0 95px;text-align:center}.hero h1{font-size:clamp(34px,5vw,58px);line-height:1.1;margin-bottom:14px}.hero p{font-size:18px;opacity:.92;margin-bottom:30px}.search{display:flex;max-width:700px;margin:auto;background:#fff;padding:7px;border-radius:14px;box-shadow:0 15px 40px #0003}.search input{flex:1;border:0;outline:0;padding:15px 16px;font-size:16px;color:#222;border-radius:10px}.search button{background:var(--accent);color:#111;font-weight:800;padding:0 27px;border-radius:10px;transition:.2s}.search button:hover{transform:translateY(-1px);filter:brightness(.97)}.demo{margin-top:16px;font-size:13px;opacity:.85}
+.section{padding:58px 0}.section-title{text-align:center;margin-bottom:30px}.section-title h2{font-size:30px;color:var(--primary)}.section-title p{color:var(--muted);margin-top:6px}
+.alert{display:none;padding:14px 16px;border-radius:10px;margin-bottom:20px}.error{background:#ffebee;color:#b71c1c;border:1px solid #ffcdd2}.success{background:#e8f5e9;color:#1b5e20;border:1px solid #c8e6c9}
+.result{display:none;background:var(--card);padding:30px;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--border)}.result-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}.result h2{color:var(--primary)}.status-pill{background:#e3f2fd;color:#1565c0;padding:7px 13px;border-radius:999px;font-size:13px;font-weight:800;white-space:nowrap}.details{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.box{background:#f8fafc;border:1px solid var(--border);padding:17px;border-radius:12px}.box span{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.box b{font-size:15px;word-break:break-word}
+.timeline{margin-top:32px;position:relative;padding-left:10px}.timeline:before{content:"";position:absolute;left:27px;top:18px;bottom:18px;width:2px;background:#dbe3ef}.step{position:relative;display:flex;align-items:flex-start;gap:15px;margin:25px 0}.circle{position:relative;z-index:1;width:36px;height:36px;min-width:36px;border-radius:50%;background:#d5dbe5;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.completed{background:var(--green)}.current{background:var(--blue);box-shadow:0 0 0 5px #1976d21a}.step h3{font-size:16px}.step p{color:var(--muted);font-size:13px;margin-top:3px}.step.current h3{color:var(--blue)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:var(--card);padding:28px 22px;border-radius:16px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--border);transition:.2s}.card:hover{transform:translateY(-3px)}.icon{font-size:38px}.card h3{color:var(--primary);margin:10px 0 7px}.card p{color:var(--muted)}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.info{background:#fff;border:1px solid var(--border);border-radius:16px;padding:25px;box-shadow:var(--shadow)}.info h3{color:var(--primary);margin-bottom:10px}.info ul{padding-left:19px;color:var(--muted)}.info li{margin:6px 0}
+footer{background:#092f6d;color:#dbeafe;padding:30px 0;margin-top:20px}.footer-inner{display:flex;justify-content:space-between;gap:20px}.footer-inner p{font-size:14px}.top{position:fixed;right:20px;bottom:20px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;display:none;box-shadow:0 6px 20px #0003}
+@media(max-width:800px){nav{display:none}.menu{display:block}.nav.open nav{display:flex;position:absolute;top:72px;left:0;right:0;background:var(--primary);padding:18px 4%;flex-direction:column;gap:15px}.details,.cards,.info-grid{grid-template-columns:1fr 1fr}.hero{padding:65px 0 75px}}
+@media(max-width:560px){.container{width:94%}.hero h1{font-size:36px}.hero p{font-size:16px}.search{flex-direction:column;background:transparent;padding:0;box-shadow:none;gap:9px}.search input,.search button{height:52px;border-radius:10px}.details,.cards,.info-grid{grid-template-columns:1fr}.result{padding:20px}.result-head{align-items:flex-start;flex-direction:column}.status-pill{white-space:normal}.section{padding:42px 0}.footer-inner{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav" id="nav">
+    <a class="logo" href="#home">📦 Quick<span>Track</span></a>
+    <nav>
+      <a href="#home">Home</a><a href="#tracking">Track</a><a href="#about">About</a><a href="#support">Support</a>
+    </nav>
+    <button class="menu" id="menu" aria-label="Open menu">☰</button>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="container">
+    <h1>Track Your Parcel</h1>
+    <p>Enter your tracking ID and get the latest shipment status instantly.</p>
+    <div class="search">
+      <input id="trackingId" type="text" maxlength="20" placeholder="e.g. PC123456" autocomplete="off">
+      <button id="trackBtn">Track Parcel</button>
+    </div>
+    <div class="demo">Demo IDs: <b>PC123456</b> · <b>PC654321</b> · <b>PC111222</b></div>
+  </div>
+</section>
+
+<section class="section" id="tracking">
+<div class="container">
+  <div class="section-title"><h2>Shipment Tracking</h2><p>Live-style demo tracking for your BCA mini project.</p></div>
+  <div class="alert error" id="error"></div>
+  <div class="alert success" id="success"></div>
+  <div class="result" id="result">
+    <div class="result-head"><h2>📦 Shipment Details</h2><span class="status-pill" id="statusPill"></span></div>
+    <div class="details">
+      <div class="box"><span>Tracking ID</span><b id="id"></b></div>
+      <div class="box"><span>Current Status</span><b id="status"></b></div>
+      <div class="box"><span>Expected Delivery</span><b id="delivery"></b></div>
+      <div class="box"><span>Sender</span><b id="sender"></b></div>
+      <div class="box"><span>Receiver</span><b id="receiver"></b></div>
+      <div class="box"><span>Branch</span><b id="branch"></b></div>
+    </div>
+    <h2 style="margin-top:32px;color:var(--primary)">Shipment Progress</h2>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="about">
+<div class="container">
+  <div class="section-title"><h2>Why QuickTrack?</h2><p>Simple features for a modern courier tracking system.</p></div>
+  <div class="cards">
+    <div class="card"><div class="icon">📍</div><h3>Branch Information</h3><p>Kanhangad Branch<br>Kasaragod, Kerala<br>Mon–Sat: 9 AM–6 PM</p></div>
+    <div class="card"><div class="icon">🚚</div><h3>Fast Delivery</h3><p>Check parcel movement from pickup to final delivery using a tracking ID.</p></div>
+    <div class="card" id="support"><div class="icon">☎️</div><h3>Customer Support</h3><p>Phone: 1800-123-4567<br>Email: support@quicktrack.com</p></div>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="container info-grid">
+  <div class="info"><h3>📋 How to Track</h3><ul><li>Enter your tracking ID above.</li><li>Click <b>Track Parcel</b>.</li><li>View shipment details and progress.</li><li>Try another demo ID anytime.</li></ul></div>
+  <div class="info"><h3>🎓 Mini Project Features</h3><ul><li>Responsive design for mobile and desktop.</li><li>JavaScript-based tracking search.</li><li>Multiple shipment records.</li><li>Dynamic status timeline and validation.</li></ul></div>
+</div>
+</section>
+</main>
+
+<footer><div class="container footer-inner"><p>© 2026 QuickTrack | BCA Mini Project</p><p>Courier Tracking Management System</p></div></footer>
+<button class="top" id="topBtn" aria-label="Back to top">↑</button>
+
+<script>
+const shipments={
+  PC123456:{status:'Out for Delivery',delivery:'25 September 2026',sender:'ABC Electronics',receiver:'Muhammed Shareef',branch:'Kanhangad Branch',step:2},
+  PC654321:{status:'In Transit',delivery:'27 September 2026',sender:'Tech World',receiver:'Rahul Kumar',branch:'Mangalore Hub',step:1},
+  PC111222:{status:'Delivered',delivery:'20 September 2026',sender:'Fashion Point',receiver:'Amina P',branch:'Kasaragod Branch',step:3}
+};
+const stages=[['Pickup','Parcel picked up from sender'],['In Transit','Parcel is moving to destination branch'],['Out for Delivery','Parcel is with the delivery executive'],['Delivered','Parcel delivered to receiver']];
+const $=id=>document.getElementById(id);
+function hideAlerts(){$('error').style.display='none';$('success').style.display='none'}
+function trackParcel(){
+  const input=$('trackingId').value.trim().toUpperCase(); hideAlerts(); $('result').style.display='none';
+  if(!input){$('error').textContent='❌ Please enter a tracking ID.';$('error').style.display='block';return}
+  const data=shipments[input];
+  if(!data){$('error').innerHTML='❌ Tracking ID not found. Try <b>PC123456</b>, <b>PC654321</b> or <b>PC111222</b>.';$('error').style.display='block';return}
+  $('id').textContent=input;$('status').textContent=data.status;$('delivery').textContent=data.delivery;$('sender').textContent=data.sender;$('receiver').textContent=data.receiver;$('branch').textContent=data.branch;$('statusPill').textContent=data.status;
+  $('timeline').innerHTML=stages.map((s,i)=>{let cls=i<data.step?'completed':i===data.step?'current':'';let mark=i<data.step?'✓':i+1;return `<div class="step"><div class="circle ${cls}">${mark}</div><div><h3>${s[0]}</h3><p>${s[1]}</p></div></div>`}).join('');
+  $('result').style.display='block';$('success').textContent='✓ Shipment found successfully.';$('success').style.display='block';$('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+$('trackBtn').addEventListener('click',trackParcel);$('trackingId').addEventListener('keydown',e=>{if(e.key==='Enter')trackParcel()});
+$('menu').addEventListener('click',()=>{$('nav').classList.toggle('open')});
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=> $('nav').classList.remove('open')));
+window.addEventListener('scroll',()=>{$('topBtn').style.display=scrollY>400?'block':'none'});$('topBtn').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
